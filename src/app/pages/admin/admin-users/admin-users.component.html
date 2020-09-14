@@ -1,0 +1,57 @@
+<div nz-row [nzGutter]="16">
+  <div nz-col class="gutter-row" [nzSpan]="24">
+    <h2>Users</h2>
+    <nz-table
+      class="unlock-table"
+      #ajaxTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="listOfData"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="size"
+      (nzPageIndexChange)="getAll(true)"
+      [nzNoResult]="contentTpl"
+      [nzShowSizeChanger]="false"
+    >
+      <ng-template #contentTpl>
+        <nz-empty [nzNotFoundContent]="'No record found.'"></nz-empty>
+
+        <!-- <span></span> -->
+      </ng-template>
+      <thead>
+        <tr>
+          <!-- nzShowSort nzSortKey="address" -->
+          <th>#</th>
+          <th>Username</th>
+          <th>Type</th>
+          <th>Images</th>
+
+          <th>
+            <span>Action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ajaxTable.data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ (data.fields?.address)[0] }}</td>
+          <td>
+            <button
+              nz-button
+              nzType="primary"
+              [routerLink]="'listing-' + data.id"
+            >
+              show detail
+            </button>
+          </td>
+
+          <td></td>
+
+          <td></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

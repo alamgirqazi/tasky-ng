@@ -1,0 +1,19 @@
+.books-container {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.status-select {
+  min-width: 300px;
+}
+
+.display-flex {
+  flex-direction: row;
+  float: right;
+  display: flex;
+
+  .flex-item {
+    padding: 5px;
+  }
+}

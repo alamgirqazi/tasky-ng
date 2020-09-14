@@ -1,0 +1,75 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a routerLink="/">
+        <img src="assets/book-shelf-48.png" alt="logo" />
+        <h1>Tasky</h1>
+      </a>
+    </div>
+
+    <ul
+      nz-menu
+      nzTheme="dark"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
+      <li nz-submenu nzOpen nzTitle="Home" nzIcon="dashboard">
+        <ul>
+          <li
+            nz-menu-item
+            nzMatchRouterExact
+            routerLink="/home/search"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>Find Books</a>
+          </li>
+          <li
+            nz-menu-item
+            nzMatchRouterExact
+            routerLink="/home/books"
+            routerLinkActive="ant-menu-item-selected"
+          >
+            <a>My Library</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i
+            class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
+        </span>
+        <span class="avatar-dropdown">
+          <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+            {{ username }}
+            <nz-avatar [nzSize]="'medium'" nzIcon="user"></nz-avatar>
+            <!-- <i nz-icon nzType="down"></i> -->
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li (click)="logout()" nz-menu-item>Logout</li>
+            </ul>
+          </nz-dropdown-menu>
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

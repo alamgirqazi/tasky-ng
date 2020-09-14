@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+
+.input-error {
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5);
+}
+
+.ant-radio-group .ant-badge-count {
+  z-index: 2;
+}
+
+.max-w-xsm {
+  max-width: 14rem;
+}
+
+.default-ribbon,
+.ribbon:before,
+.ribbon:after {
+  background: #d86e5e;
+}
+
+.blue-ribbon,
+.blue-ribbon.ribbon:before,
+.blue-ribbon.ribbon:after {
+  background: #21afdd !important;
+}
+
+.green-ribbon,
+.green-ribbon.ribbon:before,
+.green-ribbon.ribbon:after {
+  background: #52c41a !important;
+}
+
+.orange-ribbon,
+.orange-ribbon.ribbon:before,
+.orange-ribbon.ribbon:after {
+  background: orange !important;
+}
+
+.status-text {
+  color: white;
+}
+
+.blue-status {
+  background: #21afdd;
+
+}
+
+.green-status {
+  background: #52c41a;
+
+}
+
+.orange-status {
+  background: orange;
+
+}
+
+.default-status {
+  background: #d86e5e;
+
+}
+
+.ant-page-header {
+  padding: 16px 0px;
+}
