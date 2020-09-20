@@ -9,7 +9,7 @@
   >
     <div class="sidebar-logo">
       <a routerLink="/">
-        <!-- <img src="assets/book-shelf-48.png" alt="logo" /> -->
+        <img src="assets/book-shelf-48.png" alt="logo" />
         <h1>Tasky</h1>
       </a>
     </div>
@@ -54,7 +54,7 @@
         </span>
         <span class="avatar-dropdown">
           <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-            {{ username }}
+            {{ display_name }}
             <nz-avatar [nzSize]="'medium'" nzIcon="user"></nz-avatar>
             <!-- <i nz-icon nzType="down"></i> -->
           </a>

@@ -1,5 +1,36 @@
 <div nz-row [nzGutter]="16">
-  <div nz-col class="gutter-row" [nzSpan]="24">
-    I will display Images here yessss
+  <div nz-col class="gutter-row" [nzSpan]="8"></div>
+  <div nz-col class="gutter-row" [nzSpan]="8">
+    <nz-select nzAllowClear nzShowSearch [nzSize]="'large'">
+      <nz-option nzValue="all" nzLabel="all"></nz-option>
+      <nz-option
+        *ngFor="let user of users"
+        nzValue="{{ user._id }}"
+        nzLabel="{{ user.username }}"
+      ></nz-option>
+    </nz-select>
   </div>
+</div>
+<br />
+<br />
+
+<div nz-row [nzGutter]="16">
+  <div nz-col class="gutter-row" [nzSpan]="4"></div>
+  <div nz-col class="gutter-row" [nzSpan]="16">
+    <br />
+    <br />
+    <nz-result
+      [nzIcon]="'smile-twotone'"
+      [nzTitle]="
+        'Welcome to Tasky! Please choose a user from the search above to see the images'
+      "
+    >
+      <div nz-result-extra>
+        <!-- <button nz-button routerLink="/home/search" nzType="primary">
+          Let's Start!
+        </button> -->
+      </div>
+    </nz-result>
+  </div>
+  <div nz-col class="gutter-row" [nzSpan]="4"></div>
 </div>

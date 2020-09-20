@@ -9,7 +9,10 @@ import {
   NzInputModule,
   NzLayoutModule,
   NzMenuModule,
+  NzModalModule,
   NzPageHeaderModule,
+  NzResultModule,
+  NzSelectModule,
   NzSwitchModule,
   NzTableModule,
 } from "ng-zorro-antd";
@@ -21,6 +24,7 @@ import { AdminUsersComponent } from "./admin-users/admin-users.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [AdminComponent, AdminImagesComponent, AdminUsersComponent],
@@ -30,16 +34,20 @@ import { NgModule } from "@angular/core";
     NzButtonModule,
     NzSwitchModule,
     FormsModule,
+    ReactiveFormsModule,
+    NzSelectModule,
     NzMenuModule,
     NzDropDownModule,
     NzGridModule,
     NzInputModule,
     NzPageHeaderModule,
     NzTableModule,
+    NzModalModule,
     NzIconModule,
     NzAvatarModule,
     NzCardModule,
     NzEmptyModule,
+    NzResultModule,
     NzDropDownModule,
     AdminRoutingModule,
   ],

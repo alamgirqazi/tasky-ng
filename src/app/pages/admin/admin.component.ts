@@ -10,13 +10,14 @@ import { AuthService } from "../../../sdk/services/auth.service";
 export class AdminComponent implements OnInit {
   constructor(private authService: AuthService) {}
   isCollapsed = false;
-  username;
+  display_name;
 
   ngOnInit(): void {
-    // const token = this.authService.getdecodedAccessTokenId();
-    // console.log("token", token);
-    // this.username = token.email;
+    const token = this.authService.getdecodedAccessTokenId();
+    console.log("token", token);
+    this.display_name = token.display_name;
   }
+
   logout() {
     this.authService.logout();
   }

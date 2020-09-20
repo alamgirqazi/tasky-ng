@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  path: "https://booky-backend.netlify.app/.netlify/functions",
+  path: "http://http://51.132.142.22/",
 };

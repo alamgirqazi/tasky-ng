@@ -1,15 +1,16 @@
-import { Component, OnInit } from "@angular/core";
 import {
-  Validators,
-  FormGroup,
   AbstractControl,
   FormBuilder,
+  FormGroup,
+  Validators,
 } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { Router } from "@angular/router";
-import { UserService } from "src/sdk/services/user.service";
-import { HelperService } from "src/sdk/services/helper.service";
+import { Component, OnInit } from "@angular/core";
+
 import { AuthService } from "src/sdk/services/auth.service";
+import { HelperService } from "src/sdk/services/helper.service";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { UserService } from "src/sdk/services/user.service";
 
 @Component({
   selector: "app-login",
@@ -46,10 +47,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: [
-        null,
-        [Validators.required, Validators.email, Validators.minLength(6)],
-      ],
+      username: [null, [Validators.required, Validators.minLength(6)]],
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }

@@ -1,6 +1,7 @@
 <div nz-row [nzGutter]="16">
   <div nz-col class="gutter-row" [nzSpan]="24">
     <h2>Users</h2>
+    <br />
     <nz-table
       class="unlock-table"
       #ajaxTable
@@ -9,49 +10,101 @@
       [nzData]="listOfData"
       [nzLoading]="loading"
       [nzTotal]="total"
-      [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="size"
+      [(nzPageIndex)]="pageStart"
+      [(nzPageSize)]="limit"
       (nzPageIndexChange)="getAll(true)"
       [nzNoResult]="contentTpl"
       [nzShowSizeChanger]="false"
     >
       <ng-template #contentTpl>
         <nz-empty [nzNotFoundContent]="'No record found.'"></nz-empty>
-
-        <!-- <span></span> -->
       </ng-template>
       <thead>
         <tr>
-          <!-- nzShowSort nzSortKey="address" -->
           <th>#</th>
           <th>Username</th>
-          <th>Type</th>
+          <th>Display Name</th>
+          <th>Role</th>
           <th>Images</th>
 
           <th>
-            <span>Action</span>
+            <span>Edit</span>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of ajaxTable.data; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ (data.fields?.address)[0] }}</td>
+          <td>{{ data.username }}</td>
+          <td>{{ data.display_name }}</td>
+          <td>{{ data.role }}</td>
           <td>
-            <button
-              nz-button
-              nzType="primary"
-              [routerLink]="'listing-' + data.id"
-            >
-              show detail
+            <button nz-button nzType="primary">
+              <!-- [routerLink]="'listing-' + data.id" -->
+
+              show images
             </button>
           </td>
+          <td>
+            <button (click)="openEditModal(data)" nz-button nzType="secondary">
+              <!-- [routerLink]="'listing-' + data.id" -->
 
-          <td></td>
-
-          <td></td>
+              edit
+            </button>
+          </td>
         </tr>
       </tbody>
     </nz-table>
   </div>
 </div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzOkLoading]="saveLoading"
+  nzTitle="Update"
+  (nzOnCancel)="cancelModal()"
+  (nzOnOk)="okModal()"
+>
+  <form [formGroup]="editForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username"
+        >Username</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="username" id="username" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="display_name"
+        >Display Name</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="display_name" id="display_name" />
+      </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="email" id="email" />
+      </nz-form-control>
+    </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="role"
+        >Role</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="role">
+          <nz-option nzValue="User" nzLabel="User"></nz-option>
+          <nz-option nzValue="Admin" nzLabel="Admin"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <br />
+    <br />
+    <!-- <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary">Register</button>
+      </nz-form-control>
+    </nz-form-item> -->
+  </form>
+</nz-modal>

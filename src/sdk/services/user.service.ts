@@ -1,8 +1,9 @@
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+
+import { AuthService } from "./auth.service";
+import { CoreConfig } from "../core.config";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { CoreConfig } from "../core.config";
-import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
-import { AuthService } from "./auth.service";
 
 interface LoginBody {
   email: string;
@@ -21,14 +22,27 @@ export class UserService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   public userLogin(body: LoginBody): Observable<any> {
-    const url = CoreConfig.getPath() + `/users-login`;
+    const url = CoreConfig.getPath() + `/users/login`;
 
     return this.http.post(url, body);
   }
 
   public userSignup(body: SignupBody): Observable<any> {
-    const url = CoreConfig.getPath() + `/users-signup`;
+    const url = CoreConfig.getPath() + `/users/signup`;
     return this.http.post(url, body);
+  }
+  public getUsers(limit = 10, pageStart = 1): Observable<any> {
+    const url = CoreConfig.getPath() + `/users`;
+    const params = new HttpParams()
+      .append("limit", limit.toString())
+      .append("pageStart", pageStart.toString());
+
+    return this.http.get(url, { params });
+  }
+  public updateUser(username: string, body: object): Observable<any> {
+    const url = CoreConfig.getPath() + `/users/${username}`;
+
+    return this.http.put(url, body);
   }
 
   addBookToUser(body): Observable<any> {

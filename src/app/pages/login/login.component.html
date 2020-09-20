@@ -17,15 +17,15 @@
         <p class="text-center text-3xl">Welcome to Tasky.</p>
         <form [formGroup]="loginForm" class="flex flex-col pt-3 md:pt-8">
           <div class="flex flex-col pt-4">
-            <label for="email" class="text-lg">Email</label>
+            <label for="username" class="text-lg">Username</label>
             <input
-              type="email"
-              formControlName="email"
-              id="email"
-              placeholder="your@email.com"
+              type="text"
+              formControlName="username"
+              id="username"
+              placeholder="username"
               [class.input-error]="
-                loginForm.controls['email'].errors &&
-                loginForm.controls['email'].dirty
+                loginForm.controls['username'].errors &&
+                loginForm.controls['username'].dirty
               "
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
             />
