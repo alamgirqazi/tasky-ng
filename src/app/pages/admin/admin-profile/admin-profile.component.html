@@ -1,0 +1,88 @@
+<div nz-row [nzGutter]="16">
+  <div nz-col class="gutter-row" [nzSpan]="24">
+    <nz-tabset>
+      <nz-tab nzTitle="Change Password">
+        <form [formGroup]="profilePasswordForm">
+          <br />
+
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username"
+              >Username</nz-form-label
+            >
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="username" id="username" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="old_password"
+              >Old Password</nz-form-label
+            >
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input
+                nz-input
+                type="password"
+                [class.input-error]="
+                  profilePasswordForm?.controls['old_password'].errors &&
+                  profilePasswordForm?.controls['old_password'].dirty
+                "
+                formControlName="old_password"
+                id="old_password"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password"
+              >New Password</nz-form-label
+            >
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input
+                nz-input
+                type="password"
+                [class.input-error]="
+                  profilePasswordForm?.controls['password'].errors &&
+                  profilePasswordForm?.controls['password'].dirty
+                "
+                formControlName="password"
+                id="password"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="confirm_password"
+              >Confirm New Password</nz-form-label
+            >
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input
+                nz-input
+                type="password"
+                [class.input-error]="
+                  profilePasswordForm?.controls['confirm_password'].errors &&
+                  profilePasswordForm?.controls['confirm_password'].dirty
+                "
+                formControlName="confirm_password"
+                id="confirm_password"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <br />
+          <nz-form-item nz-row class="register-area">
+            <nz-form-control [nzSpan]="14" [nzOffset]="6">
+              <button
+                nz-button
+                [disabled]="!profilePasswordForm?.valid"
+                [nzLoading]="profilePasswordSaveLoading"
+                nzType="primary"
+                (click)="updatePassword()"
+                nzType="primary"
+              >
+                Update Password
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

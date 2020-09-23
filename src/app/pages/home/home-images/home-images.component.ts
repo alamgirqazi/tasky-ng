@@ -83,7 +83,7 @@ export class HomeImagesComponent implements OnInit {
       if (this.items.length) {
         this.isVisible = true;
       }
-    }, 10);
+    }, 50);
 
     // this.resetInputMultiple();
   }
