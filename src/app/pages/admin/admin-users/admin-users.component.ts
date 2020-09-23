@@ -1,8 +1,14 @@
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
-import { FormBuilder } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { HelperService } from "../../../../sdk/services/helper.service";
+import { Subscription } from "rxjs";
 import { UserService } from "../../../../sdk/services/user.service";
 
 @Component({
@@ -23,8 +29,11 @@ export class AdminUsersComponent implements OnInit {
   listOfData = [];
   isVisible = false;
   saveLoading = false;
+  addLoading = false;
+  addForm: FormGroup;
   editForm: FormGroup;
   selectedData;
+  isVisibleAddNew = false;
 
   ngOnInit(): void {
     this.formInitializer();
@@ -33,11 +42,18 @@ export class AdminUsersComponent implements OnInit {
 
   getAll(again = false) {
     this.loading = true;
-    if (!again) {
-      this.pageStart = 1;
-    }
+    // if (!again) {
+    //   this.pageStart = 1;
+    // }
 
-    this.userService.getUsers(this.limit, this.pageStart).subscribe(
+    let pageStart = 1;
+
+    if (this.pageStart > 1) {
+      pageStart = pageStart * this.limit + 1;
+    }
+    console.log("pageStart", pageStart);
+
+    this.userService.getUsers(this.limit, pageStart).subscribe(
       (response) => {
         console.log("got response", response);
         this.listOfData = response.data.docs;
@@ -56,15 +72,89 @@ export class AdminUsersComponent implements OnInit {
   }
 
   formInitializer() {
-    this.editForm = this.fb.group({
-      username: [{ value: null, disabled: true }, []],
+    this.addForm = this.fb.group({
+      username: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(6),
+          this.noWhitespaceValidator,
+        ],
+      ],
       // email: [null, []],
       display_name: [null, []],
-      role: [null, []],
-      // password: [null, [Validators.required, Validators.minLength(6)]],
+      role: [{ value: "User", disabled: true }, []],
+      password: [null, [Validators.required, Validators.minLength(6)]],
+      confirm_password: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(6),
+          this.matchOtherValidator("password"),
+        ],
+      ],
+    });
+    this.editForm = this.fb.group({
+      username: [{ value: "", disabled: true }, []],
+      // role: [{ value: "User", disabled: true }, []],
+      display_name: [null, []],
     });
   }
+  matchOtherValidator(otherControlName: string) {
+    return (control: AbstractControl): { [key: string]: any } => {
+      const otherControl: AbstractControl = control.root.get(otherControlName);
 
+      if (otherControl) {
+        const subscription: Subscription = otherControl.valueChanges.subscribe(
+          () => {
+            control.updateValueAndValidity();
+            subscription.unsubscribe();
+          }
+        );
+      }
+
+      return otherControl && control.value !== otherControl.value
+        ? { match: true }
+        : null;
+    };
+  }
+
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || "").trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
+  }
+
+  addNewUser() {
+    this.addForm.reset();
+    this.addForm.patchValue({ role: "User" });
+    this.isVisibleAddNew = true;
+  }
+
+  deleteRow(data) {
+    const body = {
+      is_deleted: true,
+    };
+    const _id = data["_id"];
+    this.userService.updateUser(_id, body).subscribe(
+      (response) => {
+        console.log("got response", response);
+        this.getAll(true);
+        // this.saveLoading = false;
+      },
+      (error) => {
+        // this.saveLoading = false;
+
+        console.log("error", error);
+        if (error.error.code === 422) {
+          return;
+        }
+        const errorMsg =
+          error?.error?.message || "No response. Please check your internet";
+        this.helperService.createMessage("error", errorMsg);
+      }
+    );
+  }
   updateUser() {
     const body = this.editForm.value;
     this.saveLoading = true;
@@ -94,6 +184,37 @@ export class AdminUsersComponent implements OnInit {
     this.updateUser();
     this.isVisible = false;
   }
+
+  okAddNewModal() {
+    this.submitForm();
+    if (this.addForm.valid) {
+      this.addLoading = true;
+      this.userService.addUser(this.addForm.value).subscribe(
+        (response) => {
+          console.log("got response", response);
+          this.getAll(true);
+          this.helperService.createMessage(
+            "success",
+            "User added successfully"
+          );
+          this.isVisibleAddNew = false;
+          this.addLoading = false;
+        },
+        (error) => {
+          this.addLoading = false;
+
+          console.log("error", error);
+          if (error.error.code === 422) {
+            return;
+          }
+          const errorMsg =
+            error?.error?.message || "No response. Please check your internet";
+          this.helperService.createMessage("error", errorMsg);
+        }
+      );
+    }
+    // this.isVisibleAddNew = false;
+  }
   openEditModal(data) {
     console.log("c");
     this.selectedData = data;
@@ -104,5 +225,17 @@ export class AdminUsersComponent implements OnInit {
   cancelModal() {
     console.log("c");
     this.isVisible = false;
+  }
+  cancelAddNewModal() {
+    this.isVisibleAddNew = false;
+  }
+
+  submitForm(): void {
+    for (const i in this.addForm.controls) {
+      if (i) {
+        this.addForm.controls[i].markAsDirty();
+        this.addForm.controls[i].updateValueAndValidity();
+      }
+    }
   }
 }

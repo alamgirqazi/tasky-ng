@@ -9,12 +9,6 @@ interface LoginBody {
   email: string;
   password: string;
 }
-
-interface SignupBody {
-  email: string;
-  password: string;
-}
-
 @Injectable({
   providedIn: "root",
 })
@@ -27,7 +21,8 @@ export class UserService {
     return this.http.post(url, body);
   }
 
-  public userSignup(body: SignupBody): Observable<any> {
+  public addUser(body): Observable<any> {
+    body["username"] = body["username"].trim();
     const url = CoreConfig.getPath() + `/users/signup`;
     return this.http.post(url, body);
   }

@@ -1,6 +1,7 @@
 <div nz-row [nzGutter]="16">
   <div nz-col class="gutter-row" [nzSpan]="24">
-    <h2>Users</h2>
+    <h2>Users (<a (click)="addNewUser()">Add New</a>)</h2>
+    <br />
     <br />
     <nz-table
       class="unlock-table"
@@ -27,14 +28,19 @@
           <th>Role</th>
           <th>Images</th>
 
-          <th>
-            <span>Edit</span>
-          </th>
+          <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of ajaxTable.data; let i = index">
-          <td>{{ i + 1 }}</td>
+          <td>
+            <div></div>
+            <div *ngIf="pageStart === 1">{{ i + 1 }}</div>
+            <div *ngIf="pageStart > 1">
+              {{ (pageStart - 1) * limit + 1 + i }}
+            </div>
+          </td>
           <td>{{ data.username }}</td>
           <td>{{ data.display_name }}</td>
           <td>{{ data.role }}</td>
@@ -52,6 +58,16 @@
               edit
             </button>
           </td>
+          <td>
+            <a
+              *ngIf="data.role === 'User'"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure you want to delete?"
+              (nzOnConfirm)="deleteRow(data)"
+              nzPopconfirmPlacement="bottom"
+              >Delete</a
+            >
+          </td>
         </tr>
       </tbody>
     </nz-table>
@@ -61,7 +77,7 @@
 <nz-modal
   [(nzVisible)]="isVisible"
   [nzOkLoading]="saveLoading"
-  nzTitle="Update"
+  nzTitle="Update User"
   (nzOnCancel)="cancelModal()"
   (nzOnOk)="okModal()"
 >
@@ -82,12 +98,77 @@
         <input nz-input formControlName="display_name" id="display_name" />
       </nz-form-control>
     </nz-form-item>
-    <!-- <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+  </form>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleAddNew"
+  [nzOkLoading]="addLoading"
+  nzTitle="Add User"
+  (nzOnCancel)="cancelAddNewModal()"
+  (nzOnOk)="okAddNewModal()"
+>
+  <form [formGroup]="addForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username"
+        >Username</nz-form-label
+      >
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="email" id="email" />
+        <input
+          nz-input
+          [class.input-error]="
+            addForm?.controls['username'].errors &&
+            addForm?.controls['username'].dirty
+          "
+          formControlName="username"
+          id="username"
+          #username
+        />
+        <div *ngIf="username?.errors?.minLength">minimum 6 characters.</div>
       </nz-form-control>
-    </nz-form-item> -->
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="display_name"
+        >Display Name</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="display_name" id="display_name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password"
+        >Password</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input
+          nz-input
+          type="password"
+          [class.input-error]="
+            addForm?.controls['password'].errors &&
+            addForm?.controls['password'].dirty
+          "
+          formControlName="password"
+          id="password"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="confirm_password"
+        >Confirm Password</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input
+          nz-input
+          type="password"
+          [class.input-error]="
+            addForm?.controls['confirm_password'].errors &&
+            addForm?.controls['confirm_password'].dirty
+          "
+          formControlName="confirm_password"
+          id="confirm_password"
+        />
+      </nz-form-control>
+    </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="role"
         >Role</nz-form-label

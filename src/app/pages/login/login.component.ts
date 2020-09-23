@@ -70,8 +70,13 @@ export class LoginComponent implements OnInit {
         (response) => {
           const token = response.token;
           this.authService.saveToken(token);
-          this.router.navigateByUrl("home/books");
 
+          const { role } = this.authService.getdecodedAccessTokenId();
+          if (role === "Admin") {
+            this.router.navigateByUrl("admin/images");
+          } else {
+            this.router.navigateByUrl("home");
+          }
           this.helperService.createMessage("success", "Login successful!");
 
           this.loading = false;

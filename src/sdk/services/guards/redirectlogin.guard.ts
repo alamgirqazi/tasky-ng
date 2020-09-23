@@ -1,7 +1,7 @@
 import { CanActivate, Router } from "@angular/router";
 
-import { Injectable } from "@angular/core";
 import { AuthService } from "../auth.service";
+import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +11,15 @@ export class RedirectLoginGuard implements CanActivate {
 
   canActivate() {
     if (this.authService.getSimpleAccessTokenId()) {
-      this.router.navigateByUrl("/home/books");
+      const { role } = this.authService.getdecodedAccessTokenId();
+      console.log("rike", role);
+      if (role === "Admin") {
+        this.router.navigateByUrl("/admin/images");
+      } else if (role === "User") {
+        this.router.navigateByUrl("/home");
+      } else {
+        this.authService.logout();
+      }
     } else {
       return true;
     }

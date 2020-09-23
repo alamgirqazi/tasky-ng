@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  path: "http://http://51.132.142.22/",
+  path: "http://51.132.142.22/api",
 };

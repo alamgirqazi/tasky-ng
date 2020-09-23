@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from "@angular/router";
 
+import { IsAdminGuard } from "./../sdk/services/guards/isadmin.guard";
 import { IsLoginGuard } from "src/sdk/services/guards/islogin.guard";
 import { LoginComponent } from "./pages/login/login.component";
 import { NgModule } from "@angular/core";
@@ -23,8 +24,10 @@ const routes: Routes = [
     path: "admin",
     loadChildren: () =>
       import("./pages/admin/admin.module").then((m) => m.AdminModule),
-    canActivate: [],
+    canActivate: [IsLoginGuard, IsAdminGuard],
   },
+
+  { path: "**", redirectTo: "/login" },
 ];
 
 @NgModule({
