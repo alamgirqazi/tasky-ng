@@ -34,8 +34,17 @@ export class UserService {
 
     return this.http.get(url, { params });
   }
+  public getCurrentUser(_id): Observable<any> {
+    const url = CoreConfig.getPath() + `/users/${_id}`;
+    return this.http.get(url);
+  }
   public updateUser(username: string, body: object): Observable<any> {
     const url = CoreConfig.getPath() + `/users/${username}`;
+
+    return this.http.put(url, body);
+  }
+  public updateUserPassword(_id: string, body: object): Observable<any> {
+    const url = CoreConfig.getPath() + `/users/password/${_id}`;
 
     return this.http.put(url, body);
   }

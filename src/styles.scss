@@ -12,6 +12,12 @@
   max-width: 14rem;
 }
 
+.ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu-title {
+  min-width: 200px;
+
+}
+
 .default-ribbon,
 .ribbon:before,
 .ribbon:after {

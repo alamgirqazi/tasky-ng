@@ -6,11 +6,84 @@
     <nz-result
       [nzIcon]="'smile-twotone'"
       [nzTitle]="
-        'Welcome to Tasky! We are excited to have you here. Lets get started by browsing books from the booky search engine. '
+        'Welcome to Tasky! We are excited to have you here. It looks like you have not added any images.'
       "
     >
-      <div nz-result-extra></div>
+      <div nz-result-extra>
+        <div class="boxy incomplete">
+          <label class="fileContainer">
+            <a>Add Image(s)</a>
+
+            <!-- <img *ngIf="!file" src="assets/attachment.png" /> -->
+            <input
+              type="file"
+              #inputFile
+              multiple
+              style="display: none"
+              (change)="onFileChangedMultiple($event)"
+            />
+
+            <button
+              *ngIf="file"
+              type="button"
+              (click)="uploadFile()"
+              class="btn btn-green"
+            >
+              UPLOAD !!
+            </button>
+
+            <!-- <i nz-icon nzType="upload" nzTheme="outline"></i> -->
+          </label>
+        </div>
+      </div>
     </nz-result>
   </div>
   <div nz-col class="gutter-row" [nzSpan]="4"></div>
 </div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzOkLoading]="okloading"
+  nzTitle="Add User"
+  [nzWidth]="820"
+  (nzOnCancel)="cancel()"
+  (nzOnOk)="ok()"
+>
+  <div class="example-container">
+    <div cdkDropList *ngFor="let item of items; let i = index">
+      <div [class.active]="item.display" class="example-box">
+        <i
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+          (click)="removeImage(i)"
+          theme="outline"
+        ></i>
+
+        <label>
+          <input
+            type="file"
+            style="display: none"
+            (change)="onFileChangedOneOfMany($event, item)"
+          />
+          <img [src]="item?.src" />
+        </label>
+      </div>
+    </div>
+    <div
+      class="cdk-drop-list uploader"
+      *ngIf="items?.length > 0 && items?.length < 5"
+    >
+      <label>
+        <input
+          type="file"
+          multiple=""
+          style="display: none"
+          (change)="onFileChangedMultiple($event)"
+        />
+        <i nz-icon nzType="picture" nzTheme="outline"></i>
+        <p>Add more</p>
+      </label>
+    </div>
+  </div>
+</nz-modal>

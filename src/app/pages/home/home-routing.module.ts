@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: "images", component: HomeImagesComponent },
       { path: "profile", component: HomeProfileComponent },
+      { path: "**", redirectTo: "images" },
     ],
   },
 ];

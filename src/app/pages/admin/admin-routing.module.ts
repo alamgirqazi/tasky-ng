@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: "users", component: AdminUsersComponent },
       { path: "images", component: AdminImagesComponent },
+      { path: "**", redirectTo: "images" },
     ],
   },
 ];

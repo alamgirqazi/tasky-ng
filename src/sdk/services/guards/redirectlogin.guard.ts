@@ -16,7 +16,7 @@ export class RedirectLoginGuard implements CanActivate {
       if (role === "Admin") {
         this.router.navigateByUrl("/admin/images");
       } else if (role === "User") {
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/home/images");
       } else {
         this.authService.logout();
       }
