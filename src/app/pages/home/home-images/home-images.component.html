@@ -14,7 +14,6 @@
           <label class="fileContainer">
             <a>Add Image(s)</a>
 
-            <!-- <img *ngIf="!file" src="assets/attachment.png" /> -->
             <input
               type="file"
               #inputFile
@@ -46,6 +45,7 @@
   [nzOkLoading]="okloading"
   nzTitle="Add User"
   [nzWidth]="820"
+  [nzOkText]="'Upload'"
   (nzOnCancel)="cancel()"
   (nzOnOk)="ok()"
 >

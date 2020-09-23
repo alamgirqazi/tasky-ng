@@ -1,3 +1,5 @@
+import { HelperService } from "./../../../../sdk/services/helper.service";
+import { ImagesService } from "./../../../../sdk/services/images.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { Component, OnInit } from "@angular/core";
 import {
@@ -19,7 +21,9 @@ import { UserService } from "src/sdk/services/user.service";
 export class HomeImagesComponent implements OnInit {
   constructor(
     private userService: UserService,
-    private message: NzMessageService
+    private imageService: ImagesService,
+    private message: NzMessageService,
+    private helperService: HelperService
   ) {}
   loading = false;
   file;
@@ -28,28 +32,20 @@ export class HomeImagesComponent implements OnInit {
   okloading = false;
 
   ngOnInit(): void {
-    // this.getAll();
+    this.getAll();
   }
-  getAll(again = false) {
+  getAll() {
     // this.loading = true;
-    // this.userService.getUserBooks().subscribe(
-    //   (response) => {
-    //     console.log("response->", response);
-    //     this.bookResults = [...response.data];
-    //     this.displaybookResults = [...response.data];
-    //     // setTimeout(() => {
-    //     if (again) {
-    //       console.log("lastEvent", this.lastEvent);
-    //       this.filterChanged(this.lastEvent || "All");
-    //     }
-    //     this.loading = false;
-    //     // }, 0);
-    //   },
-    //   (error) => {
-    //     console.log("error", error);
-    //     this.loading = false;
-    //   }
-    // );
+    this.imageService.getUserImages().subscribe(
+      (response) => {
+        console.log("response->", response);
+        this.loading = false;
+      },
+      (error) => {
+        console.log("error", error);
+        this.loading = false;
+      }
+    );
   }
   onFileChangedMultiple(e) {
     const files = e.target.files;
@@ -94,6 +90,39 @@ export class HomeImagesComponent implements OnInit {
       // delete this.items[index];
     }
   }
+
+  uploadImages() {
+    this.okloading = true;
+    const arrayBody = [];
+    for (const item of this.items) {
+      arrayBody.push(item.file);
+    }
+
+    this.imageService.uploadImages(arrayBody).subscribe(
+      (response) => {
+        this.helperService.createMessage(
+          "success",
+          "Images uploaded successfully"
+        );
+
+        console.log("got response", response);
+        // this.getCurrentUser();
+        this.okloading = false;
+        this.isVisible = false;
+      },
+      (error) => {
+        this.okloading = false;
+
+        console.log("error", error);
+        if (error.error.code === 422) {
+          return;
+        }
+        const errorMsg =
+          error?.error?.message || "No response. Please check your internet";
+        this.helperService.createMessage("error", errorMsg);
+      }
+    );
+  }
   onFileChangedOneOfMany(e, item) {
     // this.file = event.target.files[0]
     const file = e.target.files[0];
@@ -112,6 +141,8 @@ export class HomeImagesComponent implements OnInit {
     this.items.length = 0;
   }
 
-  ok() {}
+  ok() {
+    this.uploadImages();
+  }
   uploadFile() {}
 }
