@@ -19,6 +19,10 @@
   position: relative;
 }
 
+.m-h-180 {
+  min-height: 180px;
+}
+
 .ribbon {
   margin: 0;
   padding: 0;
@@ -54,8 +58,6 @@
 
 .gridview {
   img {
-
     max-height: 180px;
-
   }
 }

@@ -12,6 +12,8 @@ import {
 } from "@angular/animations";
 
 import { UserService } from "src/sdk/services/user.service";
+import { environment } from "../../../../environments/environment";
+import { CoreConfig } from "../../../../sdk/core.config";
 
 @Component({
   selector: "app-home-images",
@@ -27,7 +29,11 @@ export class HomeImagesComponent implements OnInit {
   ) {}
   loading = false;
   file;
+  tempImage = "assets/image-upload.jpg";
+
   items = [];
+  images = [];
+  skeletonItems = [1, 2, 3];
   isVisible = false;
   okloading = false;
 
@@ -39,6 +45,12 @@ export class HomeImagesComponent implements OnInit {
     this.imageService.getUserImages().subscribe(
       (response) => {
         console.log("response->", response);
+        for (let item of response.data) {
+          item.src =
+            CoreConfig.getStaticPath() + "/" + item.destination + item.filename;
+        }
+        this.images = response.data;
+
         this.loading = false;
       },
       (error) => {
@@ -104,6 +116,12 @@ export class HomeImagesComponent implements OnInit {
           "success",
           "Images uploaded successfully"
         );
+
+        for (let item of response.data) {
+          item.src =
+            CoreConfig.getStaticPath() + "/" + item.destination + item.filename;
+        }
+        this.images = response.data;
 
         console.log("got response", response);
         // this.getCurrentUser();

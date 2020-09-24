@@ -1,3 +1,36 @@
+<div class="container">
+  <div class="flex flex-wrap -mx-1 lg:-mx-4">
+    <div class="px-3 py-3 pr-0">
+      <div class="max-w-xsm gridview rounded overflow-hidden shadow-lg">
+        <label>
+          <div class="cdk-drop-list-temp uploader">
+            <input
+              type="file"
+              #inputFile
+              multiple
+              style="display: none"
+              (change)="onFileChangedMultiple($event)"
+            />
+            <i nz-icon nzType="picture" nzTheme="outline"></i>
+            <p>Upload</p>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div *ngFor="let item of images; let i = index">
+      <shared-image-card [imageInfo]="item"> </shared-image-card>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading && !images.length">
+  <div
+    *ngFor="let item of skeletonItems; let i = index"
+    class="max-w-sm w-full mt-2 mb-2 lg:max-w-full lg:flex"
+  >
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+  </div>
+</div>
+
 <div nz-row [nzGutter]="16">
   <div nz-col class="gutter-row" [nzSpan]="4"></div>
   <div nz-col class="gutter-row" [nzSpan]="16">

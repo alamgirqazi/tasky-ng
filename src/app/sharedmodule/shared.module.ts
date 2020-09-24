@@ -1,6 +1,7 @@
-import { BookCardComponent } from "./components/book-card/book-card.component";
 import { CommonModule } from "@angular/common";
+import { DurationPipe } from "./pipes/duration.pipe";
 import { FormsModule } from "@angular/forms";
+import { ImageCardComponent } from "./components/book-card/image-card.component";
 import { NgModule } from "@angular/core";
 import { NzAvatarModule } from "ng-zorro-antd/avatar";
 import { NzBadgeModule } from "ng-zorro-antd/badge";
@@ -23,7 +24,7 @@ import { NzTimelineModule } from "ng-zorro-antd/timeline";
 import { TruncatePipe } from "./pipes/truncate.pipe";
 
 @NgModule({
-  declarations: [BookCardComponent, TruncatePipe],
+  declarations: [ImageCardComponent, TruncatePipe, DurationPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -47,7 +48,7 @@ import { TruncatePipe } from "./pipes/truncate.pipe";
     NzSelectModule,
   ],
   exports: [
-    BookCardComponent,
+    ImageCardComponent,
     NzDropDownModule,
     NzAvatarModule,
     NzModalModule,
@@ -57,6 +58,7 @@ import { TruncatePipe } from "./pipes/truncate.pipe";
     NzResultModule,
     NzSelectModule,
     TruncatePipe,
+    DurationPipe,
   ],
 })
 export class SharedModule {}

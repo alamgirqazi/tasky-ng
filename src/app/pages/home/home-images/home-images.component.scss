@@ -20,7 +20,6 @@
 
 ///////////////////
 
-
 .custom-radio-box {
   display: flex;
   width: 100%;
@@ -64,7 +63,7 @@
   width: 0px;
   height: 100%;
   background-color: #d9d9d9;
-  content: '';
+  content: "";
 }
 
 .grid-container {
@@ -73,7 +72,7 @@
   margin-bottom: 7px;
 }
 
-.grid-container>div {
+.grid-container > div {
   flex: 1;
   flex-wrap: wrap;
 }
@@ -84,7 +83,7 @@
   object-fit: cover;
 }
 
-.grid-container>div {
+.grid-container > div {
   flex: 1;
   flex-wrap: wrap;
 }
@@ -93,18 +92,17 @@
   display: flex;
 }
 
-.small-thumbs>div {
+.small-thumbs > div {
   outline: 1px solid #e8e8e8;
   flex: 33.33%;
   align-items: center;
   justify-content: center;
 }
 
-.small-thumbs>div img {
+.small-thumbs > div img {
   height: 163px;
   object-fit: cover;
 }
-
 
 .example-list {
   list-style-type: none;
@@ -137,9 +135,8 @@
 
 .example-box:active {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  opacity: .6;
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  opacity: 0.6;
 }
 
 .cdk-drop-list {
@@ -157,18 +154,16 @@
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-placeholder {
-  opacity: .3;
+  opacity: 0.3;
 }
 
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
 
 .example-handle {
   position: absolute;
@@ -218,8 +213,6 @@
   z-index: 9999;
 }
 
-
-
 .boxes {
   width: 100%;
   height: 344px;
@@ -261,8 +254,26 @@
   justify-content: center;
   cursor: pointer !important;
 }
+.cdk-drop-list-temp.uploader {
+  padding-top: 60px;
+  padding-left: 76px;
+  padding-right: 137px;
+  height: 232px;
+  border: 2px dashed #ddd;
+  text-align: center;
+  cursor: pointer !important;
+}
+.cdk-drop-list-temp.uploader p {
+  font-size: 19px;
+  margin: 6px -2px;
+  color: #d6d6d6;
+}
 
 .cdk-drop-list.uploader i {
+  font-size: 57px;
+  color: #d6d6d6;
+}
+.cdk-drop-list-temp.uploader i {
   font-size: 57px;
   color: #d6d6d6;
 }
@@ -275,6 +286,9 @@
 }
 
 .cdk-drop-list.uploader:hover {
+  background: #fbfbfb;
+}
+.cdk-drop-list-temp.uploader:hover {
   background: #fbfbfb;
 }
 

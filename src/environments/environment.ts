@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   path: "http://localhost:3000/api",
+  static_path: "http://localhost:3000",
   // path: "https://booky-backend.netlify.app/.netlify/functions",
   // path: ".netlify/functions",
 };
