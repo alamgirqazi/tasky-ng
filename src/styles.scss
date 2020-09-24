@@ -9,13 +9,25 @@
 }
 
 .max-w-xsm {
-  max-width: 14rem;
+  // max-width: 14rem;
+  width: 14rem;
+}
+a.ngx-gallery-thumbnail.ngx-gallery-active {
+  outline: 4px solid #d86e5e;
+  outline-offset: -4px;
 }
 
+a.ngx-gallery-thumbnail {
+  width: calc(20% - 7.5px) !important;
+  height: calc(60% - 0px) !important;
+}
+
+ngx-gallery {
+  margin-bottom: -57px;
+}
 .ant-dropdown-menu-item,
 .ant-dropdown-menu-submenu-title {
   min-width: 200px;
-
 }
 
 .default-ribbon,
@@ -48,22 +60,18 @@
 
 .blue-status {
   background: #21afdd;
-
 }
 
 .green-status {
   background: #52c41a;
-
 }
 
 .orange-status {
   background: orange;
-
 }
 
 .default-status {
   background: #d86e5e;
-
 }
 
 .ant-page-header {

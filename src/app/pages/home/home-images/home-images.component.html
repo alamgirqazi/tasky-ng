@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="images.length">
   <div class="flex flex-wrap -mx-1 lg:-mx-4">
     <div class="px-3 py-3 pr-0">
       <div class="max-w-xsm gridview rounded overflow-hidden shadow-lg">
@@ -8,6 +8,7 @@
               type="file"
               #inputFile
               multiple
+              accept="image/*"
               style="display: none"
               (change)="onFileChangedMultiple($event)"
             />
@@ -18,7 +19,9 @@
       </div>
     </div>
     <div *ngFor="let item of images; let i = index">
-      <shared-image-card [imageInfo]="item"> </shared-image-card>
+      <div (click)="showGallery(i)">
+        <shared-image-card [imageInfo]="item"> </shared-image-card>
+      </div>
     </div>
   </div>
 </div>
@@ -31,7 +34,7 @@
   </div>
 </div>
 
-<div nz-row [nzGutter]="16">
+<div nz-row [nzGutter]="16" *ngIf="!loading && !images.length">
   <div nz-col class="gutter-row" [nzSpan]="4"></div>
   <div nz-col class="gutter-row" [nzSpan]="16">
     <br />
@@ -51,6 +54,7 @@
               type="file"
               #inputFile
               multiple
+              accept="image/*"
               style="display: none"
               (change)="onFileChangedMultiple($event)"
             />
@@ -111,6 +115,7 @@
         <input
           type="file"
           multiple=""
+          accept="image/*"
           style="display: none"
           (change)="onFileChangedMultiple($event)"
         />
@@ -119,4 +124,18 @@
       </label>
     </div>
   </div>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleGallery"
+  nzTitle="Gallery"
+  [nzWidth]="720"
+  (nzOnCancel)="cancelGallery()"
+  [nzFooter]="null"
+>
+  <shared-gallery-images
+    *ngIf="isVisibleGallery"
+    [imagesList]="images"
+    [imageIndex]="imageIndex"
+  ></shared-gallery-images>
 </nz-modal>

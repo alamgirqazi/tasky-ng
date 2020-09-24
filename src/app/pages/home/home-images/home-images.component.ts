@@ -2,17 +2,8 @@ import { HelperService } from "./../../../../sdk/services/helper.service";
 import { ImagesService } from "./../../../../sdk/services/images.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { Component, OnInit } from "@angular/core";
-import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
 
 import { UserService } from "src/sdk/services/user.service";
-import { environment } from "../../../../environments/environment";
 import { CoreConfig } from "../../../../sdk/core.config";
 
 @Component({
@@ -30,18 +21,19 @@ export class HomeImagesComponent implements OnInit {
   loading = false;
   file;
   tempImage = "assets/image-upload.jpg";
-
+  imageIndex = 0;
   items = [];
   images = [];
   skeletonItems = [1, 2, 3];
   isVisible = false;
   okloading = false;
+  isVisibleGallery = false;
 
   ngOnInit(): void {
     this.getAll();
   }
   getAll() {
-    // this.loading = true;
+    this.loading = true;
     this.imageService.getUserImages().subscribe(
       (response) => {
         console.log("response->", response);
@@ -88,7 +80,9 @@ export class HomeImagesComponent implements OnInit {
       };
     }
     setTimeout(() => {
+      console.log("time out", this.items);
       if (this.items.length) {
+        console.log("why");
         this.isVisible = true;
       }
     }, 50);
@@ -102,7 +96,14 @@ export class HomeImagesComponent implements OnInit {
       // delete this.items[index];
     }
   }
+  cancelGallery() {
+    this.isVisibleGallery = false;
+  }
 
+  showGallery(index) {
+    this.imageIndex = index;
+    this.isVisibleGallery = true;
+  }
   uploadImages() {
     this.okloading = true;
     const arrayBody = [];
@@ -124,6 +125,8 @@ export class HomeImagesComponent implements OnInit {
         this.images = response.data;
 
         console.log("got response", response);
+        this.items = [...[]];
+
         // this.getCurrentUser();
         this.okloading = false;
         this.isVisible = false;
@@ -156,7 +159,7 @@ export class HomeImagesComponent implements OnInit {
 
   cancel() {
     this.isVisible = false;
-    this.items.length = 0;
+    this.items = [...[]];
   }
 
   ok() {

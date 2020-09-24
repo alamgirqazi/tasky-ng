@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import { AuthService } from "src/sdk/services/auth.service";
 
 @Component({
@@ -9,13 +10,14 @@ import { AuthService } from "src/sdk/services/auth.service";
 export class HomeComponent implements OnInit {
   constructor(private authService: AuthService) {}
   isCollapsed = false;
-  username;
+  display_name;
 
   ngOnInit(): void {
     const token = this.authService.getdecodedAccessTokenId();
     console.log("token", token);
-    this.username = token.email;
+    this.display_name = token.display_name || token.username;
   }
+
   logout() {
     this.authService.logout();
   }

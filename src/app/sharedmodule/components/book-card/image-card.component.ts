@@ -13,7 +13,5 @@ export class ImageCardComponent implements OnInit {
   tempImage = "assets/image-upload.jpg";
   loading = false;
 
-  ngOnInit(): void {
-    console.log("th", this.imageInfo);
-  }
+  ngOnInit(): void {}
 }

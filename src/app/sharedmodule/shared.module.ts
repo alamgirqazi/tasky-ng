@@ -3,6 +3,7 @@ import { DurationPipe } from "./pipes/duration.pipe";
 import { FormsModule } from "@angular/forms";
 import { ImageCardComponent } from "./components/book-card/image-card.component";
 import { NgModule } from "@angular/core";
+import { NgxGalleryModule } from "ngx-gallery-9";
 import { NzAvatarModule } from "ng-zorro-antd/avatar";
 import { NzBadgeModule } from "ng-zorro-antd/badge";
 import { NzButtonModule } from "ng-zorro-antd/button";
@@ -21,10 +22,17 @@ import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzSkeletonModule } from "ng-zorro-antd/skeleton";
 import { NzSwitchModule } from "ng-zorro-antd/switch";
 import { NzTimelineModule } from "ng-zorro-antd/timeline";
+import { SharedGalleryImagesComponent } from "./components/shared-gallery-images/shared-gallery-images.component";
 import { TruncatePipe } from "./pipes/truncate.pipe";
 
+const components = [
+  SharedGalleryImagesComponent,
+  ImageCardComponent,
+  TruncatePipe,
+  DurationPipe,
+];
 @NgModule({
-  declarations: [ImageCardComponent, TruncatePipe, DurationPipe],
+  declarations: [...components],
   imports: [
     CommonModule,
     FormsModule,
@@ -42,13 +50,13 @@ import { TruncatePipe } from "./pipes/truncate.pipe";
     NzResultModule,
     NzDatePickerModule,
     NzModalModule,
+    NgxGalleryModule,
     NzSkeletonModule,
     NzTimelineModule,
     NzIconModule,
     NzSelectModule,
   ],
   exports: [
-    ImageCardComponent,
     NzDropDownModule,
     NzAvatarModule,
     NzModalModule,
@@ -57,8 +65,7 @@ import { TruncatePipe } from "./pipes/truncate.pipe";
     NzSkeletonModule,
     NzResultModule,
     NzSelectModule,
-    TruncatePipe,
-    DurationPipe,
+    ...components,
   ],
 })
 export class SharedModule {}

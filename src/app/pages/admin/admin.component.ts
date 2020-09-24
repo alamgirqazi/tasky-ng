@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     const token = this.authService.getdecodedAccessTokenId();
     console.log("token", token);
-    this.display_name = token.display_name;
+    this.display_name = token.display_name || token.username;
   }
 
   logout() {

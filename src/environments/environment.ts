@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  //   path: "http://51.132.142.22/api",
+  // static_path: "http://51.132.142.22",
   path: "http://localhost:3000/api",
   static_path: "http://localhost:3000",
   // path: "https://booky-backend.netlify.app/.netlify/functions",

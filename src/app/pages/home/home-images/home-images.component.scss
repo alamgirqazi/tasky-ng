@@ -72,7 +72,7 @@
   margin-bottom: 7px;
 }
 
-.grid-container > div {
+.grid-container>div {
   flex: 1;
   flex-wrap: wrap;
 }
@@ -83,7 +83,7 @@
   object-fit: cover;
 }
 
-.grid-container > div {
+.grid-container>div {
   flex: 1;
   flex-wrap: wrap;
 }
@@ -92,14 +92,14 @@
   display: flex;
 }
 
-.small-thumbs > div {
+.small-thumbs>div {
   outline: 1px solid #e8e8e8;
   flex: 33.33%;
   align-items: center;
   justify-content: center;
 }
 
-.small-thumbs > div img {
+.small-thumbs>div img {
   height: 163px;
   object-fit: cover;
 }
@@ -254,6 +254,7 @@
   justify-content: center;
   cursor: pointer !important;
 }
+
 .cdk-drop-list-temp.uploader {
   padding-top: 60px;
   padding-left: 76px;
@@ -263,6 +264,7 @@
   text-align: center;
   cursor: pointer !important;
 }
+
 .cdk-drop-list-temp.uploader p {
   font-size: 19px;
   margin: 6px -2px;
@@ -273,6 +275,7 @@
   font-size: 57px;
   color: #d6d6d6;
 }
+
 .cdk-drop-list-temp.uploader i {
   font-size: 57px;
   color: #d6d6d6;
@@ -288,6 +291,7 @@
 .cdk-drop-list.uploader:hover {
   background: #fbfbfb;
 }
+
 .cdk-drop-list-temp.uploader:hover {
   background: #fbfbfb;
 }
@@ -333,4 +337,9 @@
 .example-box.active {
   outline: 3px solid #47c0bb;
   outline-offset: -2px;
+}
+
+a.ngx-gallery-thumbnail.ngx-gallery-active {
+  outline: 4px solid #47c0bb;
+  outline-offset: -4px;
 }
