@@ -27,7 +27,10 @@ export class HomeImagesComponent implements OnInit {
   skeletonItems = [1, 2, 3];
   isVisible = false;
   okloading = false;
+  deleteLoading = false;
   isVisibleGallery = false;
+  isVisibleDelete = false;
+  deleteObj;
 
   ngOnInit(): void {
     this.getAll();
@@ -36,7 +39,6 @@ export class HomeImagesComponent implements OnInit {
     this.loading = true;
     this.imageService.getUserImages().subscribe(
       (response) => {
-        console.log("response->", response);
         for (let item of response.data) {
           item.src =
             CoreConfig.getStaticPath() + "/" + item.destination + item.filename;
@@ -90,14 +92,45 @@ export class HomeImagesComponent implements OnInit {
     // this.resetInputMultiple();
   }
   removeImage(index) {
+    console.log("r");
     if (this.items.length > 0) {
+      console.log("splicing", index);
       this.items.splice(index, 1);
 
       // delete this.items[index];
     }
   }
+  cancelDelete() {
+    this.isVisibleDelete = false;
+  }
+  deleteImage() {
+    this.deleteLoading = true;
+    const _id = this.deleteObj.imageInfo._id;
+    this.imageService.removeImage(_id).subscribe(
+      (response) => {
+        console.log("response->", response);
+
+        this.images.splice(this.deleteObj.imageIndex, 1);
+        this.helperService.createMessage(
+          "success",
+          "Image removed successfully"
+        );
+        this.deleteLoading = false;
+        this.isVisibleDelete = false;
+      },
+      (error) => {
+        console.log("error", error);
+        this.deleteLoading = false;
+      }
+    );
+  }
   cancelGallery() {
     this.isVisibleGallery = false;
+  }
+
+  removeModal(obj) {
+    this.deleteObj = obj;
+    this.isVisibleDelete = true;
   }
 
   showGallery(index) {
@@ -124,7 +157,6 @@ export class HomeImagesComponent implements OnInit {
         }
         this.images = response.data;
 
-        console.log("got response", response);
         this.items = [...[]];
 
         // this.getCurrentUser();

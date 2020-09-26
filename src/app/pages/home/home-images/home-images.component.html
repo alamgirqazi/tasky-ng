@@ -1,5 +1,5 @@
-<div class="container" *ngIf="images.length">
-  <div class="flex flex-wrap -mx-1 lg:-mx-4">
+<div class="" *ngIf="images.length">
+  <div class="flex flex-wrap -mx-1">
     <div class="px-3 py-3 pr-0">
       <div class="max-w-xsm gridview rounded overflow-hidden shadow-lg">
         <label>
@@ -19,8 +19,14 @@
       </div>
     </div>
     <div *ngFor="let item of images; let i = index">
-      <div (click)="showGallery(i)">
-        <shared-image-card [imageInfo]="item"> </shared-image-card>
+      <div>
+        <shared-image-card
+          (output)="showGallery(i)"
+          (outputDelete)="removeModal($event)"
+          [imageInfo]="item"
+          [imageIndex]="i"
+        >
+        </shared-image-card>
       </div>
     </div>
   </div>
@@ -138,4 +144,15 @@
     [imagesList]="images"
     [imageIndex]="imageIndex"
   ></shared-gallery-images>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleDelete"
+  nzTitle=""
+  [nzWidth]="720"
+  [nzOkLoading]="deleteLoading"
+  (nzOnCancel)="cancelDelete()"
+  (nzOnOk)="deleteImage()"
+>
+  <h2>Are you sure you want to delete this image ?</h2>
 </nz-modal>

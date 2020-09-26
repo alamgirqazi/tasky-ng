@@ -1,8 +1,9 @@
 <div class="px-3 py-3 pr-0">
   <div class="max-w-xsm gridview rounded overflow-hidden shadow-lg">
     <!-- (click)="removeImage(i)" -->
-
-    <img class="w-full m-h-180" src="{{ imageInfo?.src }}" />
+    <a (click)="showGallery()">
+      <img class="w-full m-h-180" src="{{ imageInfo?.src }}" />
+    </a>
     <div class="px-2 py-2">
       <!-- <div class="font-bold text-xl mb-2">
         {{ imageInfo?.originalname }}
@@ -10,7 +11,15 @@
       <p class="text-sm text-gray-600 flex items-center">
         <i class="mr-2" nz-icon nzType="clock-circle" nzTheme="outline"></i>
         {{ imageInfo?.added_on | duration }}
-        <i nz-icon nzType="delete" nzTheme="outline" theme="outline"></i>
+        <i
+          *ngIf="showDelete"
+          (click)="deleteConfirm()"
+          class="del-icon"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+          theme="outline"
+        ></i>
       </p>
     </div>
   </div>
