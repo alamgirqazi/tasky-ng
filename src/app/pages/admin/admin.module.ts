@@ -14,6 +14,7 @@ import {
   NzPopconfirmModule,
   NzResultModule,
   NzSelectModule,
+  NzSpinModule,
   NzSwitchModule,
   NzTableModule,
   NzTabsModule,
@@ -28,6 +29,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from "src/app/sharedmodule/shared.module";
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ReactiveFormsModule } from "@angular/forms";
   imports: [
     CommonModule,
     NzLayoutModule,
+    SharedModule,
     NzButtonModule,
     NzSwitchModule,
     FormsModule,
@@ -48,6 +51,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     NzDropDownModule,
     NzGridModule,
     NzInputModule,
+    NzSpinModule,
     NzPageHeaderModule,
     NzTableModule,
     NzModalModule,

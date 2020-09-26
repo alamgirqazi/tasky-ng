@@ -45,7 +45,11 @@
           <td>{{ data.display_name }}</td>
           <td>{{ data.role }}</td>
           <td>
-            <button nz-button nzType="primary">
+            <button
+              nz-button
+              (click)="showImageGallery(data._id)"
+              nzType="primary"
+            >
               <!-- [routerLink]="'listing-' + data.id" -->
 
               show images
@@ -188,4 +192,24 @@
       </nz-form-control>
     </nz-form-item> -->
   </form>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleGallery"
+  nzTitle="Gallery"
+  [nzWidth]="720"
+  (nzOnCancel)="cancelGallery()"
+  [nzFooter]="null"
+>
+  <nz-spin *ngIf="imagesLoading"> </nz-spin>
+
+  <nz-empty *ngIf="!imagesLoading && images.length === 0"> </nz-empty>
+  <h3 *ngIf="isVisibleGallery && images.length">
+    Total Images: {{ images.length }}
+  </h3>
+  <shared-gallery-images
+    *ngIf="isVisibleGallery && images.length"
+    [imagesList]="images"
+    [imageIndex]="0"
+  ></shared-gallery-images>
 </nz-modal>

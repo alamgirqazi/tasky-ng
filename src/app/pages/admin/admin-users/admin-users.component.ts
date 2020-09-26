@@ -6,8 +6,10 @@ import {
 } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
+import { CoreConfig } from "../../../../sdk/core.config";
 import { FormGroup } from "@angular/forms";
 import { HelperService } from "../../../../sdk/services/helper.service";
+import { ImagesService } from "../../../../sdk/services/images.service";
 import { Subscription } from "rxjs";
 import { UserService } from "../../../../sdk/services/user.service";
 
@@ -20,6 +22,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private helperService: HelperService,
+    private imageService: ImagesService,
     private fb: FormBuilder
   ) {}
   limit = 10;
@@ -27,8 +30,11 @@ export class AdminUsersComponent implements OnInit {
   loading = false;
   total = 0;
   listOfData = [];
+  images = [];
   isVisible = false;
   saveLoading = false;
+  imagesLoading = false;
+  isVisibleGallery = false;
   addLoading = false;
   addForm: FormGroup;
   editForm: FormGroup;
@@ -71,6 +77,32 @@ export class AdminUsersComponent implements OnInit {
     );
   }
 
+  showImageGallery(_id) {
+    this.getUserImages(_id);
+    this.isVisibleGallery = true;
+  }
+  getUserImages(_id) {
+    this.imagesLoading = true;
+    this.imageService.getUserImagesAdmin(_id).subscribe(
+      (response) => {
+        for (let item of response.data) {
+          item.src =
+            CoreConfig.getStaticPath() + "/" + item.destination + item.filename;
+        }
+        this.images = response.data;
+
+        this.imagesLoading = false;
+      },
+      (error) => {
+        console.log("error", error);
+        this.imagesLoading = false;
+      }
+    );
+  }
+  cancelGallery() {
+    this.isVisibleGallery = false;
+    this.images.length = 0;
+  }
   formInitializer() {
     this.addForm = this.fb.group({
       username: [

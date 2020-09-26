@@ -37,6 +37,16 @@ export class ImagesService {
       ),
     });
   }
+  public getUserImagesAdmin(_id): Observable<any> {
+    const url = CoreConfig.getPath() + `/images/${_id}`;
+
+    return this.http.get(url, {
+      headers: new HttpHeaders().set(
+        "Authorization",
+        this.authService.getSimpleAccessTokenId()
+      ),
+    });
+  }
 
   public removeImage(_id): Observable<any> {
     const url = CoreConfig.getPath() + `/images/${_id}`;
