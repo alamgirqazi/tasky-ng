@@ -1,8 +1,13 @@
 <div nz-row [nzGutter]="16">
   <div nz-col class="gutter-row" [nzSpan]="8"></div>
   <div nz-col class="gutter-row" [nzSpan]="8">
-    <nz-select nzAllowClear nzShowSearch [nzSize]="'large'">
-      <nz-option nzValue="all" nzLabel="all"></nz-option>
+    <nz-select
+      [(ngModel)]="selectedUserId"
+      (ngModelChange)="changedUser($event)"
+      nzAllowClear
+      nzShowSearch
+      [nzSize]="'large'"
+    >
       <nz-option
         *ngFor="let user of users"
         nzValue="{{ user._id }}"
@@ -14,7 +19,48 @@
 <br />
 <br />
 
-<div nz-row [nzGutter]="16">
+<div class="" *ngIf="images.length">
+  <div class="flex flex-wrap -mx-1">
+    <div *ngFor="let item of images; let i = index">
+      <div>
+        <shared-image-card
+          (output)="showGallery(i)"
+          [imageInfo]="item"
+          [showDelete]="false"
+          [imageIndex]="i"
+        >
+        </shared-image-card>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="imagesLoading && !images.length">
+  <div
+    *ngFor="let item of skeletonItems; let i = index"
+    class="max-w-sm w-full mt-2 mb-2 lg:max-w-full lg:flex"
+  >
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+  </div>
+</div>
+<div
+  nz-row
+  [nzGutter]="16"
+  *ngIf="!imagesLoading && !images.length && selectedUserId"
+>
+  <div nz-col class="gutter-row" [nzSpan]="4"></div>
+  <div nz-col class="gutter-row" [nzSpan]="16">
+    <br />
+    <br />
+    <nz-empty></nz-empty>
+  </div>
+  <div nz-col class="gutter-row" [nzSpan]="4"></div>
+</div>
+
+<div
+  *ngIf="!selectedUserId && !imagesLoading && !images.length"
+  nz-row
+  [nzGutter]="16"
+>
   <div nz-col class="gutter-row" [nzSpan]="4"></div>
   <div nz-col class="gutter-row" [nzSpan]="16">
     <br />
@@ -34,3 +80,17 @@
   </div>
   <div nz-col class="gutter-row" [nzSpan]="4"></div>
 </div>
+
+<nz-modal
+  [(nzVisible)]="isVisibleGallery"
+  nzTitle="Gallery"
+  [nzWidth]="720"
+  (nzOnCancel)="cancelGallery()"
+  [nzFooter]="null"
+>
+  <shared-gallery-images
+    *ngIf="isVisibleGallery"
+    [imagesList]="images"
+    [imageIndex]="imageIndex"
+  ></shared-gallery-images>
+</nz-modal>
