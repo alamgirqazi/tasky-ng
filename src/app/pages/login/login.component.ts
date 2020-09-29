@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit {
           console.log("error", error);
           const errorMsg =
             error?.error?.message ||
+            error?.error?.Error ||
             "Could not login. Please check your internet";
           this.helperService.createMessage("error", errorMsg);
 
